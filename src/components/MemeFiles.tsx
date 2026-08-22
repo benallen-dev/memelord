@@ -1,3 +1,5 @@
+import type { MemeFile } from "#/server-functions/readDir.types"
+
 import { MemeTile } from "./MemeTile"
 
 interface MemeFilesProps {

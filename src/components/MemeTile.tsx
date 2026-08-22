@@ -1,3 +1,5 @@
+import type { MemeFile } from "#/server-functions/readDir.types"
+
 interface MemeTileProps {
 	mf: MemeFile; // How does it know about MemeFile???
 }

@@ -1,4 +1,4 @@
-type MemeFile = {
+export type MemeFile = {
 	name: string;
 	isDirectory: boolean;
 	size: number;

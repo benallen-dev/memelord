@@ -1,6 +1,6 @@
 import { createServerFn } from '@tanstack/react-start'
-import { readdirSync, statSync } from 'fs'
-import { join } from 'path'
+import { readdirSync, statSync } from 'node:fs'
+import { join } from 'node:path'
 
 const dataDir = 'public/memes/';
 
