@@ -4,4 +4,4 @@ export type MemeFile = {
 	size: number;
 	modified: Date;
 	path: string;
-}
+};
