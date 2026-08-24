@@ -1,14 +1,21 @@
+import { MemeFiles } from "#/components/MemeFiles";
+import { getMemeFiles } from "#/server-functions/readDir";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/")({ component: Home });
+export const Route = createFileRoute("/")({
+	loader: async () => {
+		return getMemeFiles();
+	},
+	component: RouteComponent,
+});
 
-function Home() {
+function RouteComponent() {
+	const memeFiles = Route.useLoaderData();
 	return (
-		<div className="p-8">
-			<h1 className="text-4xl font-bold">Welcome to TanStack Start</h1>
-			<p className="mt-4 text-lg">
-				Edit <code>src/routes/index.tsx</code> to get started.
-			</p>
+		<div>
+			<h2 className="text-xl font-semibold">File Collection</h2>
+			<div>page 1 of ???</div>
+			<MemeFiles files={memeFiles} />
 		</div>
 	);
 }
