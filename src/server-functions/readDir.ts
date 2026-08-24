@@ -1,14 +1,14 @@
-import { createServerFn } from "@tanstack/react-start";
 import { readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
-
-const dataDir = "public/memes/";
+import { createServerFn } from "@tanstack/react-start";
+import type { MemeFile } from "#/server-functions/readDir.types";
+import { memeDir } from "#/constants/dirs";
 
 export const getMemeFiles = createServerFn({ method: "GET" }).handler(
 	async () => {
-		const files = readdirSync(dataDir);
+		const files = readdirSync(memeDir);
 		return files.map((file) => {
-			const stat = statSync(join(dataDir, file));
+			const stat = statSync(join(memeDir, file));
 			return {
 				name: file,
 				path: `memes/${file}`,

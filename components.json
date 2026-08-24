@@ -11,8 +11,9 @@
     "prefix": ""
   },
   "aliases": {
+    "constants": "#/constants",
     "components": "#/components",
-    "utils": "#/lib/utils",
+    "utils": "#/lib/tw-utils",
     "ui": "#/components/ui",
     "lib": "#/lib",
     "hooks": "#/hooks"

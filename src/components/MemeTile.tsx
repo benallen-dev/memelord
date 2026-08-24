@@ -1,7 +1,9 @@
 import type { MemeFile } from "#/server-functions/readDir.types";
 
+import { formatFileSize } from "#/lib/format-filesize";
+
 interface MemeTileProps {
-	mf: MemeFile; // How does it know about MemeFile???
+	mf: MemeFile;
 }
 
 export function MemeTile({ mf }: MemeTileProps) {
@@ -12,9 +14,8 @@ export function MemeTile({ mf }: MemeTileProps) {
 		>
 			<p className="font-bold text-lg mb-2">{mf.name}</p>
 			<img src={mf.path} alt={mf.name}></img>
-			<p className="text-gray-700"> {mf.isDirectory ? "dir" : "file"}</p>
 			<p className="text-gray-700">{mf.modified.toLocaleString("nl-NL")}</p>
-			<p className="text-gray-700">{mf.size} bytes</p>
+			<p className="text-gray-700">{formatFileSize(mf.size)}</p>
 		</div>
 	);
 }

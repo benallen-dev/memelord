@@ -12,7 +12,7 @@ export function MemeFiles({ files }: MemeFilesProps) {
 	}
 
 	return (
-		<div className="grid grid-cols-5 gap-6 items-start">
+		<div className="w-full grid grid-cols-[repeat(auto-fit,minmax(--spacing(80),1fr))] gap-6 items-start">
 			{files.map((file) => (
 				<MemeTile key={file.name} mf={file} />
 			))}
