@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as UploadRouteImport } from './routes/upload'
+import { Route as MemesSplatRouteImport } from './routes/memes/$'
+import { Route as ApiMemesEventsRouteImport } from './routes/api/memes/events'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +24,49 @@ const UploadRoute = UploadRouteImport.update({
   path: '/upload',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MemesSplatRoute = MemesSplatRouteImport.update({
+  id: '/memes/$',
+  path: '/memes/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiMemesEventsRoute = ApiMemesEventsRouteImport.update({
+  id: '/api/memes/events',
+  path: '/api/memes/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/upload': typeof UploadRoute
+  '/memes/$': typeof MemesSplatRoute
+  '/api/memes/events': typeof ApiMemesEventsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/upload': typeof UploadRoute
+  '/memes/$': typeof MemesSplatRoute
+  '/api/memes/events': typeof ApiMemesEventsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/upload': typeof UploadRoute
+  '/memes/$': typeof MemesSplatRoute
+  '/api/memes/events': typeof ApiMemesEventsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/upload'
+  fullPaths: '/' | '/upload' | '/memes/$' | '/api/memes/events'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/upload'
-  id: '__root__' | '/' | '/upload'
+  to: '/' | '/upload' | '/memes/$' | '/api/memes/events'
+  id: '__root__' | '/' | '/upload' | '/memes/$' | '/api/memes/events'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   UploadRoute: typeof UploadRoute
+  MemesSplatRoute: typeof MemesSplatRoute
+  ApiMemesEventsRoute: typeof ApiMemesEventsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +85,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UploadRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/memes/$': {
+      id: '/memes/$'
+      path: '/memes/$'
+      fullPath: '/memes/$'
+      preLoaderRoute: typeof MemesSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/memes/events': {
+      id: '/api/memes/events'
+      path: '/api/memes/events'
+      fullPath: '/api/memes/events'
+      preLoaderRoute: typeof ApiMemesEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   UploadRoute: UploadRoute,
+  MemesSplatRoute: MemesSplatRoute,
+  ApiMemesEventsRoute: ApiMemesEventsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

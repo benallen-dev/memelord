@@ -4,23 +4,12 @@ import { existsSync } from "node:fs";
 import { writeFile } from "node:fs/promises";
 import { extname, join } from "node:path";
 import { createServerFn } from "@tanstack/react-start";
-import { memeDir } from "#/constants/dirs";
-
-const allowedMimeTypes = new Set([
-	"image/png",
-	"image/jpeg",
-	"image/gif",
-	"image/webp",
-]);
-
-const imageExtensions = [".png", ".jpg", ".jpeg", ".gif", ".webp"];
-
-const extensionByMimeType = new Map([
-	["image/png", ".png"],
-	["image/jpeg", ".jpg"],
-	["image/gif", ".gif"],
-	["image/webp", ".webp"],
-]);
+import { getMemeDir } from "#/lib/meme-dir";
+import {
+	ALLOWED_MIME_TYPES,
+	extensionForMimeType,
+	MEME_EXTENSIONS,
+} from "#/lib/meme-filetypes";
 
 function sanitizeBaseName(name: string) {
 	return name
@@ -31,14 +20,14 @@ function sanitizeBaseName(name: string) {
 }
 
 function resolveExtension(base: string, file: File) {
-	if (imageExtensions.includes(extname(base).toLowerCase())) {
+	if (MEME_EXTENSIONS.has(extname(base).toLowerCase())) {
 		return "";
 	}
 	const fromOriginal = extname(file.name).toLowerCase();
-	if (imageExtensions.includes(fromOriginal)) {
+	if (MEME_EXTENSIONS.has(fromOriginal)) {
 		return fromOriginal;
 	}
-	return extensionByMimeType.get(file.type) ?? "";
+	return extensionForMimeType(file.type) ?? "";
 }
 
 export const uploadMeme = createServerFn({ method: "POST" })
@@ -50,7 +39,7 @@ export const uploadMeme = createServerFn({ method: "POST" })
 		if (!(file instanceof File) || file.size === 0) {
 			throw new Error("Please choose an image to upload");
 		}
-		if (!allowedMimeTypes.has(file.type)) {
+		if (!ALLOWED_MIME_TYPES.has(file.type)) {
 			throw new Error("Only PNG, JPG, GIF and WebP images are allowed");
 		}
 		return {
@@ -61,7 +50,7 @@ export const uploadMeme = createServerFn({ method: "POST" })
 	.handler(async ({ data }) => {
 		const base = sanitizeBaseName(data.fileName) || data.file.name;
 		const fileName = `${base}${resolveExtension(base, data.file)}`;
-		const targetPath = join(memeDir, fileName);
+		const targetPath = join(getMemeDir(), fileName);
 		if (existsSync(targetPath)) {
 			throw new Error(`"${fileName}" already exists`);
 		}

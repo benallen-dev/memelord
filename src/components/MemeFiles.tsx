@@ -1,4 +1,4 @@
-import type { MemeFile } from "#/server-functions/readDir.types";
+import type { MemeFile } from "#/server-functions/readDir";
 
 import { MemeTile } from "./MemeTile";
 
@@ -12,7 +12,7 @@ export function MemeFiles({ files }: MemeFilesProps) {
 	}
 
 	return (
-		<div className="w-full grid grid-cols-[repeat(auto-fit,minmax(--spacing(80),1fr))] gap-6 items-start">
+		<div className="w-full grid grid-cols-[repeat(auto-fit,minmax(--spacing(80),1fr))] gap-6">
 			{files.map((file) => (
 				<MemeTile key={file.name} mf={file} />
 			))}

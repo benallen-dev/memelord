@@ -1,21 +1,23 @@
 import { readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { createServerFn } from "@tanstack/react-start";
-import type { MemeFile } from "#/server-functions/readDir.types";
-import { memeDir } from "#/constants/dirs";
+
+import { getMemeDir } from "#/lib/meme-dir";
 
 export const getMemeFiles = createServerFn({ method: "GET" }).handler(
 	async () => {
-		const files = readdirSync(memeDir);
+		const files = readdirSync(getMemeDir());
 		return files.map((file) => {
-			const stat = statSync(join(memeDir, file));
+			const stat = statSync(join(getMemeDir(), file));
 			return {
 				name: file,
 				path: `memes/${file}`,
 				isDirectory: stat.isDirectory(),
 				size: stat.size,
 				modified: stat.mtime,
-			} as MemeFile;
+			};
 		});
 	},
 );
+
+export type MemeFile = Awaited<ReturnType<typeof getMemeFiles>>[number];

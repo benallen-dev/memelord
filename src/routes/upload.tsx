@@ -2,7 +2,7 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import type { ChangeEvent, FormEvent } from "react";
-import { useRef, useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "#/components/ui/button";
 import {
 	Card,
@@ -13,13 +13,12 @@ import {
 } from "#/components/ui/card";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
+import { UPLOAD_ACCEPT_ATTRIBUTE } from "#/lib/meme-filetypes";
 import { uploadMeme } from "#/server-functions/uploadMeme";
 
 export const Route = createFileRoute("/upload")({
 	component: RouteComponent,
 });
-
-const imageAccept = "image/png,image/jpeg,image/gif,image/webp";
 
 type UploadState =
 	| { status: "idle" }
@@ -99,13 +98,14 @@ function RouteComponent() {
 							ref={fileInputRef}
 							id="file"
 							type="file"
-							accept={imageAccept}
+							accept={UPLOAD_ACCEPT_ATTRIBUTE}
 							onChange={handleFileChange}
 							disabled={state.status === "uploading"}
 						/>
 					</div>
 					{previewUrl && (
-						<img src={previewUrl}
+						<img
+							src={previewUrl}
 							alt="Preview of selected image"
 							className="max-h-48 w-full rounded-md border object-contain"
 						/>
