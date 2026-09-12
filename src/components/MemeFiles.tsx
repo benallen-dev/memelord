@@ -1,4 +1,4 @@
-import type { MemeFile } from "#/server-functions/readDir.types";
+import type { MemeFile } from "#/schemas/meme-file";
 
 import { MemeTile } from "./MemeTile";
 

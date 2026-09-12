@@ -12,6 +12,7 @@
   },
   "aliases": {
     "constants": "#/constants",
+    "schemas": "#/schemas",
     "components": "#/components",
     "utils": "#/lib/tw-utils",
     "ui": "#/components/ui",

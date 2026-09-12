@@ -1,1 +1,1 @@
-export const memeDir = "public/memes/";
+export const memeDir = "memes/";

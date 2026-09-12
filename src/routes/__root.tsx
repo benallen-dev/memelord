@@ -3,6 +3,7 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 
 import appCss from "../styles.css?url";
+import { getCurrentUser } from "#/server-functions/auth";
 
 export const Route = createRootRoute({
 	head: () => ({
@@ -25,6 +26,8 @@ export const Route = createRootRoute({
 			},
 		],
 	}),
+	headers: () => ({ 'Cache-Control': 'private, no-store' }),
+	beforeLoad: async () => ({ user: await getCurrentUser() }),
 	shellComponent: RootDocument,
 });
 
