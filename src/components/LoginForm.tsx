@@ -4,6 +4,7 @@ import { Input } from "#/components/ui/input";
 
 import { z } from 'zod';
 
+import { useServerFn } from "@tanstack/react-start";
 import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 import { login } from "#/server-functions/auth";
 
@@ -21,6 +22,8 @@ const { useAppForm } = createFormHook({
 });
 
 export function LoginForm() {
+	const loginFn = useServerFn(login);
+
 	const form = useAppForm({
 		defaultValues: {
 			username: '',
@@ -34,7 +37,7 @@ export function LoginForm() {
 		},
 		onSubmit: async ({ value }) => {
 			alert("submitting");
-			const res = await login({ data: value })
+			const res = await loginFn({ data: value })
 			alert(JSON.stringify(res, null, 2));
 
 
@@ -42,9 +45,9 @@ export function LoginForm() {
 		},
 	});
 
-	function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
+	async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
 		e.preventDefault();
-		form.handleSubmit();
+		await form.handleSubmit();
 	}
 
 	return <form onSubmit={handleSubmit} className="grid gap-4">
