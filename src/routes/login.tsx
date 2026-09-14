@@ -1,3 +1,4 @@
+import { AuthStatus } from "#/components/AuthStatus";
 import { LoginForm } from "#/components/LoginForm";
 import {
   Card,
@@ -10,13 +11,11 @@ import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/login')({
   component: RouteComponent,
+  headers: () => ({ 'Cache-Control': "private, no-store" }),
 })
 
 
 function RouteComponent() {
-
-  const { user } = Route.useRouteContext();
-
   return <div className="w-screen h-screen flex justify-center items-center">
     <Card className="w-full max-w-md">
       <CardHeader>
@@ -26,7 +25,7 @@ function RouteComponent() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <pre>{JSON.stringify(user, null, 2)}</pre>
+        <AuthStatus />
       </CardContent>
       <CardContent>
         <LoginForm />
