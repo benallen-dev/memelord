@@ -52,8 +52,6 @@ export const login = createServerFn({ method: "POST" })
 		// I can just feel the timing attacks I'm going to accidentally allow
 		const user = authenticateUser(data.username, data.password);
 
-		console.log({ user })
-
 		if (!user) {
 			setResponseStatus(401);
 			return { error: "Invalid credentials" };
@@ -70,7 +68,7 @@ export const logout = createServerFn({ method: "POST" }).handler(async () => {
 	const session = await useSession();
 	await session.clear();
 
-	throw redirect({ to: "/" });
+	// throw redirect({ to: "/" });
 });
 
 export const getCurrentUser = createServerFn({ method: "GET" }).handler(

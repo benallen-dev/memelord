@@ -36,12 +36,7 @@ export function LoginForm() {
 			}),
 		},
 		onSubmit: async ({ value }) => {
-			alert("submitting");
-			const res = await loginFn({ data: value })
-			alert(JSON.stringify(res, null, 2));
-
-
-			console.dir(value);
+			await loginFn({ data: value })
 		},
 	});
 
