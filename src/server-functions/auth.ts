@@ -63,7 +63,7 @@ export const login = createServerFn({ method: "POST" })
 		const session = await useSession();
 		await session.update({ userId: user.id });
 
-		// throw redirect({ to: '/' });
+		throw redirect({ to: '/' });
 	});
 
 export const logout = createServerFn({ method: "POST" }).handler(async () => {
