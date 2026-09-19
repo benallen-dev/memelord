@@ -1,4 +1,5 @@
 import { MemeFiles } from "#/components/MemeFiles";
+import { SiteHeader } from "#/components/SiteHeader";
 import { getMemeFiles } from "#/server-functions/readDir";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -13,9 +14,12 @@ function RouteComponent() {
 	const memeFiles = Route.useLoaderData();
 	return (
 		<div>
-			<h2 className="text-xl font-semibold">File Collection</h2>
-			<div>page 1 of ???</div>
-			<MemeFiles files={memeFiles} />
+			<SiteHeader />
+			<main className="p-8">
+				<h2 className="text-xl font-semibold">File Collection</h2>
+				<div>page 1 of ???</div>
+				<MemeFiles files={memeFiles} />
+			</main>
 		</div>
 	);
 }
